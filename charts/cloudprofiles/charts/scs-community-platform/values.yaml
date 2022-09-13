@@ -1,0 +1,53 @@
+global:
+  kubernetes:
+    versions: {}
+    upstreamVersions:
+      include: false
+
+name: scs-community-platform
+type: openstack
+enabled: true
+kubernetes:
+  versions: {}
+
+machineImages:
+  - name: ubuntu
+    versions:
+    - version: 20.4.0
+      cri:
+      - name: containerd
+      - name: docker
+machineTypes:
+  - cpu: "2"
+    gpu: "0"
+    memory: 4Gi
+    name: 2C-4GB-20GB
+  - cpu: "4"
+    gpu: "0"
+    memory: 8Gi
+    name: 4C-8GB-60GB
+  - cpu: "8"
+    gpu: "0"
+    memory: 16Gi
+    name: 8C-16GB-60GB
+regions:
+  - name: RegionOne
+    zones:
+    - name: nova
+providerConfig:
+  apiVersion: openstack.provider.extensions.gardener.cloud/v1alpha1
+  kind: CloudProfileConfig
+  machineImages:
+  - name: ubuntu
+    versions:
+    - version: 20.4.0
+      image: "Ubuntu Minimal 20.04"
+  useOctavia: true
+  keystoneURLs:
+  - region: RegionOne
+    url: https://api.gx-scs.sovereignit.cloud:5000
+  constraints:
+    floatingPools:
+    - name: ext01
+    loadBalancerProviders:
+    - name: amphora

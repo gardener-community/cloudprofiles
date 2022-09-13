@@ -1,0 +1,66 @@
+global:
+  kubernetes:
+    versions: {}
+    upstreamVersions:
+      include: false
+
+name: azure
+enabled: true
+kubernetes:
+  versions: {}
+machineImages:
+  - name: gardenlinux
+    versions:
+    - version: 576.0.0
+      cri:
+      - name: containerd
+      - name: docker
+    - version: 318.8.0
+      cri:
+      - name: containerd
+      - name: docker
+machineTypes:
+  - cpu: "2"
+    gpu: "0"
+    memory: 8Gi
+    name: Standard_D2s_v3
+    usable: true
+  - cpu: "4"
+    gpu: "0"
+    memory: 16Gi
+    name: Standard_D4s_v3
+    usable: true
+  - cpu: "4"
+    gpu: "0"
+    memory: 8Gi
+    name: Standard_F4s_v2
+    usable: true
+volumeTypes:
+  - class: standard
+    name: standard
+    usable: true
+  - class: premium
+    name: premium
+    usable: true
+regions:
+  - name: germanywestcentral
+    zones:
+    - name: "1"
+    - name: "2"
+    - name: "3"
+providerConfig:
+  apiVersion: azure.provider.extensions.gardener.cloud/v1alpha1
+  kind: CloudProfileConfig
+  machineImages:
+  - name: gardenlinux
+    versions:
+    - urn: sap:gardenlinux:greatest:576.0.0
+      version: 576.0.0
+    - urn: sap:gardenlinux:greatest:318.8.0
+      version: 318.8.0
+  countFaultDomains:
+  - region: germanywestcentral
+    count: 2
+  countUpdateDomains:
+  - region: germanywestcentral
+    count: 5

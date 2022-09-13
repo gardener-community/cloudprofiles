@@ -1,0 +1,82 @@
+global:
+  kubernetes:
+    versions: {}
+    upstreamVersions:
+      include: false
+
+name: betacloud
+type: openstack
+enabled: true
+kubernetes:
+  versions: {}
+
+machineImages:
+  - name: gardenlinux
+    versions:
+    - version: 318.8.0
+      cri:
+      - name: containerd
+      - name: docker
+    - version: 576.1.0
+      cri:
+      - name: containerd
+      - name: docker
+  - name: ubuntu
+    versions:
+    - version: 20.4.20210105
+      cri:
+      - name: containerd
+      - name: docker
+    - version: 20.4.20201016
+      cri:
+      - name: containerd
+      - name: docker
+machineTypes:
+  - cpu: "2"
+    gpu: "0"
+    memory: 4Gi
+    name: 2C-4GB-40GB
+  - cpu: "4"
+    gpu: "0"
+    memory: 8Gi
+    name: 4C-8GB-20GB
+  - cpu: "4"
+    gpu: "0"
+    memory: 8Gi
+    name: 4C-8GB-40GB
+  - cpu: "8"
+    gpu: "0"
+    memory: 32Gi
+    name: 8C-32GB-40GB
+regions:
+  - name: betacloud-1
+    zones:
+    - name: south-2
+providerConfig:
+  apiVersion: openstack.provider.extensions.gardener.cloud/v1alpha1
+  kind: CloudProfileConfig
+  machineImages:
+  - name: ubuntu
+    versions:
+    - version: 20.4.20210105
+      image: "Ubuntu 20.04"
+      regions:
+        - name: betacloud-1
+          id: d4a056f9-4f5f-46e4-9a78-5006118dd094 
+    - version: 20.4.20201016
+      image: "Ubuntu 20.04 (20201016)"
+  - name: gardenlinux
+    versions:
+    - version: 318.8.0
+      image: "Garden Linux 318.8"
+    - version: 576.1.0
+      image: "Garden Linux 576.1"
+  useOctavia: true
+  keystoneURLs:
+  - region: betacloud-1
+    url: https://api-1.betacloud.de:5000/v3/
+  constraints:
+    floatingPools:
+    - name: external
+    loadBalancerProviders:
+    - name: amphora

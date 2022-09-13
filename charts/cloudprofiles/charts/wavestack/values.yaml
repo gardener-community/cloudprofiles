@@ -1,0 +1,59 @@
+global:
+  kubernetes:
+    versions: {}
+    upstreamVersions:
+      include: false
+
+name: wavestack
+type: openstack
+enabled: true
+kubernetes:
+  versions: {}
+
+machineImages:
+  - name: gardenlinux
+    versions:
+    - version: 576.10.0
+      cri:
+      - name: containerd
+      - name: docker
+  - name: ubuntu
+    versions:
+    - version: 20.4.0
+      cri:
+      - name: containerd
+      - name: docker
+machineTypes:
+  - cpu: "2"
+    gpu: "0"
+    memory: 4Gi
+    name: "SCS-2V:4:10"
+  - cpu: "4"
+    gpu: "0"
+    memory: 8Gi
+    name: "SCS-4V:8:20"
+regions:
+  - name: MUC5
+    zones:
+    - name: muc5-a
+providerConfig:
+  apiVersion: openstack.provider.extensions.gardener.cloud/v1alpha1
+  kind: CloudProfileConfig
+  machineImages:
+  - name: gardenlinux
+    versions:
+    - version: 576.10.0
+      image: "Garden Linux 576.10"
+  - name: ubuntu
+    versions:
+    - version: 20.4.0
+      image: "Ubuntu 20.04"
+  useOctavia: true
+  keystoneURLs:
+  - region: MUC5
+    url: https://api.wavestack.de:5000
+  constraints:
+    floatingPools:
+    - name: external
+    loadBalancerProviders:
+    - name: amphora
