@@ -21,15 +21,15 @@ machineTypes:
   - cpu: "2"
     gpu: "0"
     memory: 4Gi
-    name: 2C-4GB-20GB
+    name: SCS-2V:4:20
   - cpu: "4"
     gpu: "0"
     memory: 8Gi
-    name: 4C-8GB-60GB
+    name: SCS-4V:8:50
   - cpu: "8"
     gpu: "0"
     memory: 16Gi
-    name: 8C-16GB-60GB
+    name: SCS-8V:16:50
 regions:
   - name: prod1
     zones:
@@ -42,6 +42,8 @@ providerConfig:
     versions:
     - version: 20.4.0
       image: "Ubuntu Minimal 20.04"
+    - version: 22.4.0
+      image: "Ubuntu Minimal 22.04"
   useOctavia: true
   keystoneURLs:
   - region: prod1
