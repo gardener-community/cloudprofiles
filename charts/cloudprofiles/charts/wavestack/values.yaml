@@ -13,47 +13,231 @@ kubernetes:
 machineImages:
   - name: gardenlinux
     versions:
-    - version: 576.10.0
-      cri:
-      - name: containerd
-      - name: docker
+      - version: 576.12.0
+        cri:
+          - name: containerd
+          - name: docker
   - name: ubuntu
     versions:
-    - version: 20.4.0
-      cri:
-      - name: containerd
-      - name: docker
+      - version: 20.4.0
+        cri:
+          - name: containerd
+          - name: docker
+      - version: 22.4.0
+        cri:
+          - name: containerd
+          - name: docker
 machineTypes:
-  - cpu: "2"
-    gpu: "0"
-    memory: 4Gi
-    name: "SCS-2V:4:10"
-  - cpu: "4"
-    gpu: "0"
-    memory: 8Gi
-    name: "SCS-4V:8:20"
+  - name: SCS-8V:64:200
+    memory: 65536
+    cpu: 8
+  - name: SCS-4V:32
+    memory: 32768
+    cpu: 4
+  - name: SCS-1V:8:20s
+    memory: 8192
+    cpu: 1
+  - name: SCS-64V:128
+    memory: 131072
+    cpu: 64
+  - name: SCS-4V:16:50
+    memory: 16384
+    cpu: 4
+  - name: SCS-1V:16
+    memory: 16384
+    cpu: 1
+  - name: SCS-8V:32:100s
+    memory: 32768
+    cpu: 8
+  - name: SCS-16V:128
+    memory: 131072
+    cpu: 16
+  - name: SCS-1V:8:20
+    memory: 8192
+    cpu: 1
+  - name: SCS-8V:32
+    memory: 32768
+    cpu: 8
+  - name: SCS-1V:4
+    memory: 4096
+    cpu: 1
+  - name: SCS-4V:8:20
+    memory: 8192
+    cpu: 4
+  - name: SCS-16V:64:200s
+    memory: 65536
+    cpu: 16
+  - name: SCS-1L:1:5
+    memory: 1024
+    cpu: 1
+  - name: SCS-1V:16:50
+    memory: 16384
+    cpu: 1
+  - name: SCS-16V:32:100
+    memory: 32768
+    cpu: 16
+  - name: SCS-2V:16:50s
+    memory: 16384
+    cpu: 2
+  - name: SCS-2V:8:20s
+    memory: 8192
+    cpu: 2
+  - name: SCS-32V:128:500s
+    memory: 131072
+    cpu: 32
+  - name: SCS-2V:8:20
+    memory: 8192
+    cpu: 2
+  - name: SCS-16V:32
+    memory: 32768
+    cpu: 16
+  - name: SCS-32V:256:1000s
+    memory: 262144
+    cpu: 32
+  - name: SCS-1V:8
+    memory: 8192
+    cpu: 1
+  - name: SCS-2V:32:100
+    memory: 32768
+    cpu: 2
+  - name: SCS-32V:256:1000
+    memory: 262144
+    cpu: 32
+  - name: SCS-1V:2:5
+    memory: 2048
+    cpu: 1
+  - name: SCS-2V:32
+    memory: 32768
+    cpu: 2
+  - name: SCS-16V:64:200
+    memory: 65536
+    cpu: 16
+  - name: SCS-2V:8
+    memory: 8192
+    cpu: 2
+  - name: SCS-8V:64:200s
+    memory: 65536
+    cpu: 8
+  - name: SCS-8V:64
+    memory: 65536
+    cpu: 8
+  - name: SCS-4V:64
+    memory: 65536
+    cpu: 4
+  - name: SCS-64V:256:1000
+    memory: 262144
+    cpu: 64
+  - name: SCS-64V:256
+    memory: 262144
+    cpu: 64
+  - name: SCS-2V:4:20s
+    memory: 4096
+    cpu: 2
+  - name: SCS-32V:128
+    memory: 131072
+    cpu: 32
+  - name: SCS-16V:128:500s
+    memory: 131072
+    cpu: 16
+  - name: SCS-4V:8
+    memory: 8192
+    cpu: 4
+  - name: SCS-1V:2
+    memory: 2048
+    cpu: 1
+  - name: SCS-1L:1
+    memory: 1024
+    cpu: 1
+  - name: SCS-2V:16:50
+    memory: 16384
+    cpu: 2
+  - name: SCS-2V:16
+    memory: 16384
+    cpu: 2
+  - name: SCS-8V:32:100
+    memory: 32768
+    cpu: 8
+  - name: SCS-4V:32:100s
+    memory: 32768
+    cpu: 4
+  - name: SCS-32V:128:500
+    memory: 131072
+    cpu: 32
+  - name: SCS-8V:16:50
+    memory: 16384
+    cpu: 8
+  - name: SCS-32V:64:200
+    memory: 65536
+    cpu: 32
+  - name: SCS-16V:128:500
+    memory: 131072
+    cpu: 16
+  - name: SCS-4V:16:100s
+    memory: 16384
+    cpu: 4
+  - name: SCS-4V:32:100
+    memory: 32768
+    cpu: 4
+  - name: SCS-4V:64:200
+    memory: 65536
+    cpu: 4
+  - name: SCS-64V:128:500
+    memory: 131072
+    cpu: 64
+  - name: SCS-64V:256:1000s
+    memory: 262144
+    cpu: 64
+  - name: SCS-2V:4
+    memory: 4096
+    cpu: 2
+  - name: SCS-4V:16:50s
+    memory: 16384
+    cpu: 4
+  - name: SCS-8V:16
+    memory: 16384
+    cpu: 8
+  - name: SCS-2V:4:10
+    memory: 4096
+    cpu: 2
+  - name: SCS-32V:64
+    memory: 65536
+    cpu: 32
+  - name: SCS-16V:64
+    memory: 65536
+    cpu: 16
+  - name: SCS-1V:4:10
+    memory: 4096
+    cpu: 1
+  - name: SCS-32V:256
+    memory: 262144
+    cpu: 32
+  - name: SCS-4V:16
+    memory: 16384
+    cpu: 4
 regions:
   - name: MUC5
     zones:
-    - name: muc5-a
+      - name: muc5-a
 providerConfig:
   apiVersion: openstack.provider.extensions.gardener.cloud/v1alpha1
   kind: CloudProfileConfig
   machineImages:
-  - name: gardenlinux
-    versions:
-    - version: 576.10.0
-      image: "Garden Linux 576.10"
-  - name: ubuntu
-    versions:
-    - version: 20.4.0
-      image: "Ubuntu 20.04"
+    - name: gardenlinux
+      versions:
+        - version: 576.12.0
+          image: "Garden Linux 576.12"
+    - name: ubuntu
+      versions:
+        - version: 20.4.0
+          image: "Ubuntu 20.04"
+        - version: 22.4.0
+          image: "Ubuntu 22.04"
   useOctavia: true
   keystoneURLs:
-  - region: MUC5
-    url: https://api.wavestack.de:5000
+    - region: MUC5
+      url: https://api.wavestack.de:5000
   constraints:
     floatingPools:
-    - name: external
+      - name: external
     loadBalancerProviders:
-    - name: amphora
+      - name: amphora
