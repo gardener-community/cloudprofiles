@@ -12,7 +12,7 @@
       "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
-  ]
+  ],
   "regexManagers": [
     {
       "fileMatch": [
