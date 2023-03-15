@@ -1,0 +1,32 @@
+{
+  "baseBranches": [
+    "main",
+  ],
+  "automerge": true,
+  "platformAutomerge": true,
+  "separateMinorPatch": true,
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 1,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major", "minor"],
+      "enabled": false
+    }
+  ]
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "^charts/cloudprofiles/values.yaml$"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver-coerced",
+      "depNameTemplate": "kubernetes/kubernetes",
+      "matchStrings": [
+        // https://regex101.com/r/oimJd1/1
+        "        (?<currentValue>[0-9.]+):"
+      ]
+    }
+  ],
+  "enabledManagers": ["regex"],
+  "prCreation": "immediate",
+}
