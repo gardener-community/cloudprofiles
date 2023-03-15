@@ -11,7 +11,11 @@
     {
       "matchUpdateTypes": ["major", "minor"],
       "enabled": false
-    }
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "enabled": true 
+    },
   ],
   "regexManagers": [
     {
