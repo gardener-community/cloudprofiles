@@ -1,0 +1,52 @@
+global:
+  kubernetes:
+    versions: {}
+    upstreamVersions:
+      include: false
+
+name: regiocloud
+type: openstack
+enabled: true
+kubernetes:
+  versions: {}
+
+machineImages:
+  - name: gardenlinux
+    versions:
+    - version: 934.6
+      cri:
+      - name: containerd
+machineTypes:
+  - cpu: "2"
+    gpu: "0"
+    memory: 4Gi
+    name: SCS-2V-4-10
+  - cpu: "4"
+    gpu: "0"
+    memory: 8Gi
+    name: SCS-4V-8-20
+  - cpu: "8"
+    gpu: "0"
+    memory: 32Gi
+    name: SCS-8V-32-50
+regions:
+  - name: regiocloud-a
+    zones:
+    - name: nova
+providerConfig:
+  apiVersion: openstack.provider.extensions.gardener.cloud/v1alpha1
+  kind: CloudProfileConfig
+  machineImages:
+  - name: gardenlinux
+    versions:
+    - version: 934.6.0
+      image: "Garden Linux 934.6"
+  useOctavia: true
+  keystoneURLs:
+  - region: regiocloud-a
+    url: https://keystone.services.a.regiocloud.tech
+  constraints:
+    floatingPools:
+    - name: public
+    loadBalancerProviders:
+    - name: amphora
