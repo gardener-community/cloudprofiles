@@ -31,6 +31,8 @@ gcp:
   enabled: false
 hcloud:
   enabled: false
+regiocloud:
+  enabled: false
 pluscloud-open:
   enabled: false
 scs-community-platform:
