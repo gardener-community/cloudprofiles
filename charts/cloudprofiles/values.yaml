@@ -23,8 +23,6 @@ aws:
   enabled: false
 azure:
   enabled: false
-betacloud:
-  enabled: false
 citycloud:
   enabled: false
 fugacloud:
