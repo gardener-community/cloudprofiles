@@ -1,12 +1,18 @@
+# Little script to fetch current k8s versions for cloudprofile
+#
+# Usage: Set github token as env variable GITHUB_TOKEN and Charts.yaml file as first parameter
+# and values.yaml as second parameter
+#
+# Example GITHUB_TOKEN=pat_blabla python get-k8s-versions.py Chart.yaml values.yaml
+
 from github import Github
 import semver
 import sys
 import ruamel.yaml as yaml
+import os
 
-# using an access token
-g = Github("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")
+g = Github(os.getenv("GITHUB_TOKEN"))
 
-# Then play with your Github objects:
 latest_semver = semver.VersionInfo.parse(g.get_repo("kubernetes/kubernetes").get_latest_release().tag_name[1:]) # cutting leading v
 minor_old = semver.VersionInfo(1, latest_semver.minor - 1, 0, "incomplete")
 minor_old2 = semver.VersionInfo(1, latest_semver.minor - 2, 0, "incomplete")
@@ -75,20 +81,38 @@ if version_step == 0:
                 print("We have a patch update")
                 break
 
+if version_step == 0:
+    # All done
+    exit()
+
 # Write values.yaml
+with open(sys.argv[1], "r") as stream:
+    try:
+        values = yaml.safe_load(stream)
+        values["global"]["kubernetes"]["upstreamVersions"]["versions"].clear()
+        for version in new_versions:
+            values["global"]["kubernetes"]["upstreamVersions"]["versions"][str(version)] = {"classification": "supported"}
+        with open(sys.argv[1], "w") as fp:
+            try:
+                yaml.dump(values, fp, default_flow_style=False)
+            except yaml.YAMLError as exc:
+                print(exc)
+    except yaml.YAMLError as exc:
+        print(exc)
+
 # Write Chart.yaml
 with open(sys.argv[2], "r") as stream:
     try:
         chart_yaml = yaml.safe_load(stream)
         chart_version = semver.VersionInfo.parse(chart_yaml["version"])
         if version_step == 1:
-            chart_version.bump_patch()
+            chart_version = chart_version.bump_patch()
         elif version_step == 2:
-            chart_version.bump_minor()
+            chart_version = chart_version.bump_minor()
         chart_yaml["version"] = str(chart_version)
         with open(sys.argv[2], "w") as fp:
             try:
-                yaml.dump(chart_yaml, fp)
+                yaml.dump(chart_yaml, fp, default_flow_style=False)
             except yaml.YAMLError as exc:
                 print(exc)
     except yaml.YAMLError as exc:
