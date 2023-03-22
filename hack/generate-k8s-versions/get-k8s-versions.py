@@ -52,38 +52,37 @@ with open(sys.argv[1], "r") as stream:
             old_versions.append(semver.VersionInfo.parse(version))
     except yaml.YAMLError as exc:
         print(exc)
+        exit(1)
 
 if len(new_versions) != 4 or len(old_versions) != 4:
     print("Error, expecting exactly 4 supported kubernetes verions.")
-    exit()
+    exit(1)
 
-new_versions.sort()
+new_versions.sort() # newest version will be last in list
 old_versions.sort()
 
 # Version step is 0 if no version bump happens at all, it is 1 if only patch versions increase
 # it is 2 if at least one minor version bump took place
 version_step = 0
 
-# Assuming major is always 1:
-# First check if a minor version has been upgraded
-for i, version in enumerate(new_versions):
-    if new_versions[i].minor > old_versions[i].minor:
-        version_step = 2
-        print("We have a minor update")
-        break
 
-if version_step == 0:
-# if no minor update took place, lets check if a patch update took place
-    for i, version in enumerate(new_versions):
-        if new_versions[i].minor == old_versions[i].minor:
-            if new_versions[i].patch > old_versions[i].patch:
-                version_step = 1
-                print("We have a patch update")
-                break
+# Assuming major is always 1:
+# lets check if a patch update took place
+for newversion in new_versions:
+    for oldversion in old_versions:
+        if oldversion.minor == newversion.minor:
+            if newversion.patch > oldversion.patch:
+                version_step = 1 # only patch updates so far
+                print("patch update: ", str(oldversion), "->", str(newversion))
+
+# check if the minor version has been upgraded
+if new_versions[3].minor > old_versions[3].minor:
+    version_step = 2 # minor update as well, override patch update version bump
+    print("minor update: ", str(old_versions[3]), "->", str(new_versions[3]))
 
 if version_step == 0:
     # All done
-    exit()
+    exit(0)
 
 # Write values.yaml
 with open(sys.argv[1], "r") as stream:
@@ -97,8 +96,10 @@ with open(sys.argv[1], "r") as stream:
                 yaml.dump(values, fp, default_flow_style=False)
             except yaml.YAMLError as exc:
                 print(exc)
+                exit(1)
     except yaml.YAMLError as exc:
         print(exc)
+        exit(1)
 
 # Write Chart.yaml
 with open(sys.argv[2], "r") as stream:
@@ -115,6 +116,8 @@ with open(sys.argv[2], "r") as stream:
                 yaml.dump(chart_yaml, fp, default_flow_style=False)
             except yaml.YAMLError as exc:
                 print(exc)
+                exit(1)
     except yaml.YAMLError as exc:
         print(exc)
+        exit(1)
 
