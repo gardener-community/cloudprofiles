@@ -1,10 +1,12 @@
 name: Release on Chart version bump
 
-on: push
-  branches:
-    - main
-  paths:
-    - charts/cloudprofiles/Chart.yaml
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - charts/cloudprofiles/Chart.yaml
+  workflow_dispatch:
 
 jobs:
   release:
