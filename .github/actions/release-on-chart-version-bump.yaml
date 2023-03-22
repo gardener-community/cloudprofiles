@@ -1,0 +1,24 @@
+name: Release on Chart version bump
+
+on: push
+  branches:
+    - main
+  paths:
+    - charts/cloudprofiles/Chart.yaml
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        - name: Set foobar to cool
+      - name: Get chart version from Chart.yaml
+        id: get_chart_version
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.version' charts/cloudprofiles/Chart.yaml
+      - name: Create GitHub Release for the current version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create ${{ steps.get_chart_version.outputs.result }} --generate-notes
