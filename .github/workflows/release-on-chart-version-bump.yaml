@@ -14,7 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        - name: Set foobar to cool
       - name: Get chart version from Chart.yaml
         id: get_chart_version
         uses: mikefarah/yq@master
