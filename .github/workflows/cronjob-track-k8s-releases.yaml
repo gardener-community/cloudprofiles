@@ -2,6 +2,8 @@ name: Track upstream k8s releases
 
 on: 
   workflow_dispatch:
+  schedule:
+   - cron: '37 5 * * *'
 
 jobs:
   track:
