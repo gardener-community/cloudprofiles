@@ -21,10 +21,10 @@ jobs:
         run: python ./hack/generate-k8s-versions/get-k8s-versions.py charts/cloudprofiles/values.yaml charts/cloudprofiles/Chart.yaml > ${{ runner.temp }}/commitmessage.txt
       - name: Set commit message
           id: commit_message_step
-          run: |
-            echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
-            cat ${{ runner.temp }}/commitmessage.txt >> $GITHUB_OUTPUT
-            echo 'EOF' >> $GITHUB_OUTPUT
+        run: |
+          echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
+          cat ${{ runner.temp }}/commitmessage.txt >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
       - name: Commit (possible) changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
