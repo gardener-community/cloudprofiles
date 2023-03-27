@@ -1,22 +1,3 @@
-global:
-  kubernetes:
-    versions: {}
-    # kubernetes latest supported versions
-    upstreamVersions:
-      include: true
-      versions:
-        1.22.17:
-          classification: supported
-        1.23.17:
-          classification: supported
-        1.24.12:
-          classification: supported
-        1.25.8:
-          classification: supported
-  seedSelector:
-    enabled: false
-    selector: {}
-
 alicloud:
   enabled: false
 aws:
@@ -29,11 +10,28 @@ fugacloud:
   enabled: false
 gcp:
   enabled: false
+global:
+  kubernetes:
+    upstreamVersions:
+      include: true
+      versions:
+        1.23.17:
+          classification: supported
+        1.24.12:
+          classification: supported
+        1.25.8:
+          classification: supported
+        1.26.3:
+          classification: supported
+    versions: {}
+  seedSelector:
+    enabled: false
+    selector: {}
 hcloud:
   enabled: false
-regiocloud:
-  enabled: false
 pluscloud-open:
+  enabled: false
+regiocloud:
   enabled: false
 scs-community-platform:
   enabled: false
