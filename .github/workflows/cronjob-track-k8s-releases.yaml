@@ -18,8 +18,14 @@ jobs:
         run: pip install -r hack/generate-k8s-versions/requirements.txt
       - name: Run k8s-version tracker
         id: get_k8s_versions
-        run: python ./hack/generate-k8s-versions/get-k8s-versions.py charts/cloudprofiles/values.yaml charts/cloudprofiles/Chart.yaml
+        run: python ./hack/generate-k8s-versions/get-k8s-versions.py charts/cloudprofiles/values.yaml charts/cloudprofiles/Chart.yaml > ${{ runner.temp }}/commitmessage.txt
+      - name: Set commit message
+          id: commit_message_step
+          run: |
+            echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
+            cat ${{ runner.temp }}/commitmessage.txt >> $GITHUB_OUTPUT
+            echo 'EOF' >> $GITHUB_OUTPUT
       - name: Commit (possible) changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: ${{ steps.get_k8s_versions.outputs.result }}
+          commit_message: ${{ steps.commit_message_step.outputs.commit_message }}
