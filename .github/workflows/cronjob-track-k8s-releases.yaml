@@ -17,4 +17,4 @@ jobs:
       - name: Setup Python dependencies
         run: pip install -r hack/generate-k8s-versions/requirements.txt
       - name: Run k8s-version tracker
-        run: python ./hack/generate-k8s-versions/requirements.txt charts/cloudprofiles/Chart.yaml charts/cloudprofile/values.yaml
+        run: python ./hack/generate-k8s-versions/get-k8s-versions.py charts/cloudprofiles/Chart.yaml charts/cloudprofile/values.yaml
