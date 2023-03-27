@@ -1,7 +1,7 @@
 # Little script to fetch current k8s versions for cloudprofile
 #
-# Usage: Set github token as env variable GITHUB_TOKEN and Charts.yaml file as first parameter
-# and values.yaml as second parameter
+# Usage: Set github token as env variable GITHUB_TOKEN and values.yaml file as first parameter
+# and Chart.yaml as second parameter
 #
 # Example GITHUB_TOKEN=pat_blabla python get-k8s-versions.py Chart.yaml values.yaml
 
