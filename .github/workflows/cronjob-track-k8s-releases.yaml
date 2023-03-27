@@ -26,5 +26,17 @@ jobs:
           echo 'EOF' >> $GITHUB_OUTPUT
       - name: Commit (possible) changes
         uses: stefanzweifel/git-auto-commit-action@v4
+        id: auto-commit-action
         with:
           commit_message: ${{ steps.commit_message_step.outputs.commit_message }}
+      - name: Get chart version from Chart.yaml
+        id: get_chart_version
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.version' charts/cloudprofiles/Chart.yaml
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+      - name: Create GitHub Release for the current version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create ${{ steps.get_chart_version.outputs.result }} --generate-notes
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
