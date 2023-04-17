@@ -12,14 +12,33 @@ import ruamel.yaml as yaml
 import os
 
 g = Github(os.getenv("GITHUB_TOKEN"))
+old_versions = []
+with open(sys.argv[1], "r") as stream:
+    try:
+        values = yaml.safe_load(stream)
+        for version in list(values["global"]["kubernetes"]["upstreamVersions"]["versions"].keys()):
+            old_versions.append(semver.VersionInfo.parse(version))
+    except yaml.YAMLError as exc:
+        print(exc)
+        exit(1)
+old_versions.sort() # newest version will be last in list
+
+if len(old_versions) != 4:
+    print("Error, expecting exactly 4 supported kubernetes versions.")
+    exit(1)
+
 
 latest_semver = semver.VersionInfo.parse(g.get_repo("kubernetes/kubernetes").get_latest_release().tag_name[1:]) # cutting leading v
+
+if latest_semver.minor < old_versions[3].minor:
+    print("The upstream \"latest\" release is lower than the highest locally tracked release. This can happen and is no problem as long as the \"highest\" version will be marked as \"latest\" on GitHub at some point in time. For now this program is going to exit. A consecutive run will ensure that all relevant versions will be tracked. Additional Information: https://github.com/gardener-community/cloudprofiles/issues/18")
+    exit(0)
+
 minor_old = semver.VersionInfo(1, latest_semver.minor - 1, 0, "incomplete")
 minor_old2 = semver.VersionInfo(1, latest_semver.minor - 2, 0, "incomplete")
 minor_old3 = semver.VersionInfo(1, latest_semver.minor - 3, 0, "incomplete")
 
 new_versions = [latest_semver]
-old_versions = []
 
 for release in g.get_repo("kubernetes/kubernetes").get_releases():
     semver_release = semver.VersionInfo.parse(release.tag_name[1:]) # again, cut the hopefully leading v
@@ -45,21 +64,12 @@ for release in g.get_repo("kubernetes/kubernetes").get_releases():
     if minor_old.prerelease is None and minor_old2.prerelease is None and  minor_old3.prerelease is None:
         break
 
-with open(sys.argv[1], "r") as stream:
-    try:
-        values = yaml.safe_load(stream)
-        for version in list(values["global"]["kubernetes"]["upstreamVersions"]["versions"].keys()):
-            old_versions.append(semver.VersionInfo.parse(version))
-    except yaml.YAMLError as exc:
-        print(exc)
-        exit(1)
 
-if len(new_versions) != 4 or len(old_versions) != 4:
-    print("Error, expecting exactly 4 supported kubernetes verions.")
+if len(new_versions) != 4:
+    print("Error, expecting exactly 4 supported kubernetes versions.")
     exit(1)
 
 new_versions.sort() # newest version will be last in list
-old_versions.sort()
 
 # Version step is 0 if no version bump happens at all, it is 1 if only patch versions increase
 # it is 2 if at least one minor version bump took place
