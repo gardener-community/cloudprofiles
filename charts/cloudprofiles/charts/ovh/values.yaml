@@ -3,7 +3,7 @@ global:
     versions: {}
     upstreamVersions:
       include: false
-name: citycloud
+name: ovh
 type: openstack
 enabled: true
 kubernetes:
@@ -11,9 +11,10 @@ kubernetes:
 machineImages:
   - name: ubuntu
     versions:
-    - version: 22.04
+    - version: "22.04"
       cri:
       - name: containerd
+      - name: docker
 machineTypes:
   - name: win-b2-7
     memory: 7000
@@ -283,16 +284,10 @@ providerConfig:
   machineImages:
   - name: ubuntu
     versions:
-    - version: 22.04
+    - version: "22.04"
       image: "Ubuntu 22.04"
   useOctavia: true
-  keystoneURLs:
-  - region: Fra1
-    url: https://auth.cloud.ovh.net/v3
-  - region: Kna1
-    url: https://kna1.citycloud.com:5000/v3/
-  - region: Sto2
-    url: https://sto2.citycloud.com:5000/v3/
+  keystoneURL: https://auth.cloud.ovh.net/v3
   constraints:
     floatingPools:
     - name: ext-net
