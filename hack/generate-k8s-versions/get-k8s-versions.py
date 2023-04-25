@@ -28,17 +28,12 @@ if len(old_versions) != 4:
     exit(1)
 
 
-latest_semver = semver.VersionInfo.parse(g.get_repo("kubernetes/kubernetes").get_latest_release().tag_name[1:]) # cutting leading v
+minor_old0 = semver.VersionInfo(1, old_versions[3].minor - 0, 0, "incomplete")
+minor_old1 = semver.VersionInfo(1, old_versions[3].minor - 1, 0, "incomplete")
+minor_old2 = semver.VersionInfo(1, old_versions[3].minor - 2, 0, "incomplete")
+minor_old3 = semver.VersionInfo(1, old_versions[3].minor - 3, 0, "incomplete")
 
-if latest_semver.minor < old_versions[3].minor:
-    print("The upstream \"latest\" release is lower than the highest locally tracked release. This can happen and is no problem as long as the \"highest\" version will be marked as \"latest\" on GitHub at some point in time. For now this program is going to exit. A consecutive run will ensure that all relevant versions will be tracked. Additional Information: https://github.com/gardener-community/cloudprofiles/issues/18")
-    exit(0)
-
-minor_old = semver.VersionInfo(1, latest_semver.minor - 1, 0, "incomplete")
-minor_old2 = semver.VersionInfo(1, latest_semver.minor - 2, 0, "incomplete")
-minor_old3 = semver.VersionInfo(1, latest_semver.minor - 3, 0, "incomplete")
-
-new_versions = [latest_semver]
+new_versions = []
 
 for release in g.get_repo("kubernetes/kubernetes").get_releases():
     semver_release = semver.VersionInfo.parse(release.tag_name[1:]) # again, cut the hopefully leading v
@@ -46,10 +41,15 @@ for release in g.get_repo("kubernetes/kubernetes").get_releases():
         continue
     if semver_release.build is not None:
         continue
-    if minor_old.prerelease == "incomplete" and semver_release.minor == minor_old.minor:
-        minor_old = minor_old.replace(prerelease=None)
-        minor_old = minor_old.replace(patch = semver_release.patch)
-        new_versions.append(minor_old)
+    if minor_old0.prerelease == "incomplete" and semver_release.minor == minor_old0.minor:
+        minor_old0 = minor_old0.replace(prerelease=None)
+        minor_old0 = minor_old0.replace(patch = semver_release.patch)
+        new_versions.append(minor_old0)
+        continue
+    if minor_old1.prerelease == "incomplete" and semver_release.minor == minor_old1.minor:
+        minor_old1 = minor_old1.replace(prerelease=None)
+        minor_old1 = minor_old1.replace(patch = semver_release.patch)
+        new_versions.append(minor_old1)
         continue
     if minor_old2.prerelease == "incomplete" and semver_release.minor == minor_old2.minor:
         minor_old2 = minor_old2.replace(prerelease=None)
@@ -61,7 +61,7 @@ for release in g.get_repo("kubernetes/kubernetes").get_releases():
         minor_old3 = minor_old3.replace(patch = semver_release.patch)
         new_versions.append(minor_old3)
         continue
-    if minor_old.prerelease is None and minor_old2.prerelease is None and  minor_old3.prerelease is None:
+    if minor_old0.prerelease is None and minor_old1.prerelease is None and  minor_old2.prerelease is None and  minor_old3.prerelease is None:
         break
 
 
