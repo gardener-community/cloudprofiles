@@ -11,7 +11,7 @@ kubernetes:
 machineImages:
   - name: ubuntu
     versions:
-    - version: "22.04"
+    - version: "22.4.20230418"
       cri:
       - name: containerd
       - name: docker
@@ -286,7 +286,7 @@ providerConfig:
   machineImages:
   - name: ubuntu
     versions:
-    - version: "22.04"
+    - version: "22.4.20230418"
       image: "Ubuntu 22.04"
   useOctavia: true
   keystoneURL: https://auth.cloud.ovh.net/v3
