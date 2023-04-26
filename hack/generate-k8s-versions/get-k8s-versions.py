@@ -12,14 +12,28 @@ import ruamel.yaml as yaml
 import os
 
 g = Github(os.getenv("GITHUB_TOKEN"))
-
-latest_semver = semver.VersionInfo.parse(g.get_repo("kubernetes/kubernetes").get_latest_release().tag_name[1:]) # cutting leading v
-minor_old = semver.VersionInfo(1, latest_semver.minor - 1, 0, "incomplete")
-minor_old2 = semver.VersionInfo(1, latest_semver.minor - 2, 0, "incomplete")
-minor_old3 = semver.VersionInfo(1, latest_semver.minor - 3, 0, "incomplete")
-
-new_versions = [latest_semver]
 old_versions = []
+with open(sys.argv[1], "r") as stream:
+    try:
+        values = yaml.safe_load(stream)
+        for version in list(values["global"]["kubernetes"]["upstreamVersions"]["versions"].keys()):
+            old_versions.append(semver.VersionInfo.parse(version))
+    except yaml.YAMLError as exc:
+        print(exc)
+        exit(1)
+old_versions.sort() # newest version will be last in list
+
+if len(old_versions) != 4:
+    print("Error, expecting exactly 4 supported kubernetes versions.")
+    exit(1)
+
+
+minor_old0 = semver.VersionInfo(1, old_versions[3].minor - 0, 0, "incomplete")
+minor_old1 = semver.VersionInfo(1, old_versions[3].minor - 1, 0, "incomplete")
+minor_old2 = semver.VersionInfo(1, old_versions[3].minor - 2, 0, "incomplete")
+minor_old3 = semver.VersionInfo(1, old_versions[3].minor - 3, 0, "incomplete")
+
+new_versions = []
 
 for release in g.get_repo("kubernetes/kubernetes").get_releases():
     semver_release = semver.VersionInfo.parse(release.tag_name[1:]) # again, cut the hopefully leading v
@@ -27,10 +41,15 @@ for release in g.get_repo("kubernetes/kubernetes").get_releases():
         continue
     if semver_release.build is not None:
         continue
-    if minor_old.prerelease == "incomplete" and semver_release.minor == minor_old.minor:
-        minor_old = minor_old.replace(prerelease=None)
-        minor_old = minor_old.replace(patch = semver_release.patch)
-        new_versions.append(minor_old)
+    if minor_old0.prerelease == "incomplete" and semver_release.minor == minor_old0.minor:
+        minor_old0 = minor_old0.replace(prerelease=None)
+        minor_old0 = minor_old0.replace(patch = semver_release.patch)
+        new_versions.append(minor_old0)
+        continue
+    if minor_old1.prerelease == "incomplete" and semver_release.minor == minor_old1.minor:
+        minor_old1 = minor_old1.replace(prerelease=None)
+        minor_old1 = minor_old1.replace(patch = semver_release.patch)
+        new_versions.append(minor_old1)
         continue
     if minor_old2.prerelease == "incomplete" and semver_release.minor == minor_old2.minor:
         minor_old2 = minor_old2.replace(prerelease=None)
@@ -42,24 +61,15 @@ for release in g.get_repo("kubernetes/kubernetes").get_releases():
         minor_old3 = minor_old3.replace(patch = semver_release.patch)
         new_versions.append(minor_old3)
         continue
-    if minor_old.prerelease is None and minor_old2.prerelease is None and  minor_old3.prerelease is None:
+    if minor_old0.prerelease is None and minor_old1.prerelease is None and  minor_old2.prerelease is None and  minor_old3.prerelease is None:
         break
 
-with open(sys.argv[1], "r") as stream:
-    try:
-        values = yaml.safe_load(stream)
-        for version in list(values["global"]["kubernetes"]["upstreamVersions"]["versions"].keys()):
-            old_versions.append(semver.VersionInfo.parse(version))
-    except yaml.YAMLError as exc:
-        print(exc)
-        exit(1)
 
-if len(new_versions) != 4 or len(old_versions) != 4:
-    print("Error, expecting exactly 4 supported kubernetes verions.")
+if len(new_versions) != 4:
+    print("Error, expecting exactly 4 supported kubernetes versions.")
     exit(1)
 
 new_versions.sort() # newest version will be last in list
-old_versions.sort()
 
 # Version step is 0 if no version bump happens at all, it is 1 if only patch versions increase
 # it is 2 if at least one minor version bump took place
