@@ -37,3 +37,5 @@ scs-community-platform:
   enabled: false
 wavestack:
   enabled: false
+ovh:
+  enabled: false
