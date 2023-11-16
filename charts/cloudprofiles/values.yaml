@@ -38,6 +38,8 @@ global:
         1.25.15:
           classification: supported
         1.26.10:
+          classification: deprecated
+        1.26.11:
           classification: supported
         1.26.5:
           classification: deprecated
