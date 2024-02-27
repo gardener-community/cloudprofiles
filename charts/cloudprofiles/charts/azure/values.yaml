@@ -14,11 +14,9 @@ machineImages:
     - version: 576.0.0
       cri:
       - name: containerd
-      - name: docker
     - version: 318.8.0
       cri:
       - name: containerd
-      - name: docker
 machineTypes:
   - cpu: "2"
     gpu: "0"

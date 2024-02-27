@@ -16,7 +16,6 @@ machineImages:
     - version: 20.4.0
       cri:
       - name: containerd
-      - name: docker
 machineTypes:
   - cpu: "2"
     gpu: "0"

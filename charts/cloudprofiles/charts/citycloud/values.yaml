@@ -16,11 +16,9 @@ machineImages:
       classification: preview
       cri:
       - name: containerd
-      - name: docker
     - version: 20.4.20200423
       cri:
       - name: containerd
-      - name: docker
 machineTypes:
   - cpu: "2"
     gpu: "0"

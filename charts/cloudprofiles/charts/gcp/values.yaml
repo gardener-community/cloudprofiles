@@ -15,11 +15,9 @@ machineImages:
     - version: 576.0.0
       cri:
       - name: containerd
-      - name: docker
     - version: 318.8.0
       cri:
       - name: containerd
-      - name: docker
 providerConfig:
   apiVersion: gcp.provider.extensions.gardener.cloud/v1alpha1
   kind: CloudProfileConfig

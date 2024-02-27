@@ -13,7 +13,7 @@ machineImages:
     versions:
     - version: 2023.4.0
       cri:
-      - name: docker
+      - name: containerd
 machineTypes:
   - name: ecs.sn2ne.large
     cpu: "2"

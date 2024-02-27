@@ -14,7 +14,6 @@ machineImages:
     - version: "22.4.20230418"
       cri:
       - name: containerd
-      - name: docker
 machineTypes:
   - name: win-b2-7
     memory: 7000000
