@@ -15,7 +15,6 @@ machineImages:
     - version: 20.4.20210616
       cri:
       - name: containerd
-      - name: docker
 machineTypes:
   - name: cx21
     cpu: "2"
