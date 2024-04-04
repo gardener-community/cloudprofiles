@@ -15,6 +15,12 @@ global:
     upstreamVersions:
       include: true
       versions:
+        1.26.15:
+          classification: supported
+        1.27.12:
+          classification: supported
+        1.28.8:
+          classification: supported
         1.29.3:
           classification: supported
     versions: {}
