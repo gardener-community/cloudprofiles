@@ -1,6 +1,6 @@
 name: Release on Chart version bump
 
-on: 
+on:
   push:
     branches:
       - main
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Get chart version from Chart.yaml
         id: get_chart_version
         uses: mikefarah/yq@master
