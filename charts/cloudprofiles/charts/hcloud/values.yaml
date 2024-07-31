@@ -16,10 +16,6 @@ machineImages:
       cri:
       - name: containerd
 machineTypes:
-  - name: cx21
-    cpu: "2"
-    memory: 4Gi
-    gpu: "0"
   - name: cx22
     cpu: "2"
     memory: 4Gi
@@ -27,10 +23,6 @@ machineTypes:
   - name: cpx21
     cpu: "3"
     memory: 4Gi
-    gpu: "0"
-  - name: cx31
-    cpu: "2"
-    memory: 8Gi
     gpu: "0"
   - name: cx32
     cpu: "4"
@@ -40,10 +32,6 @@ machineTypes:
     cpu: "4"
     memory: 8Gi
     gpu: "0"
-  - name: cx41
-    cpu: "4"
-    memory: 16Gi
-    gpu: "0"
   - name: cx42
     cpu: "8"
     memory: 16Gi
@@ -51,10 +39,6 @@ machineTypes:
   - name: cpx41
     cpu: "8"
     memory: 16Gi
-    gpu: "0"
-  - name: cx51
-    cpu: "8"
-    memory: 32Gi
     gpu: "0"
   - name: cx52
     cpu: "16"
@@ -122,10 +106,10 @@ regions:
     zones:
       - name: ash-dc1
         unavailableMachineTypes:
-        - cx21
-        - cx31
-        - cx41
-        - cx51
+        - cx22
+        - cx32
+        - cx42
+        - cx52
         - ccx11
         - ccx21
         - ccx31
