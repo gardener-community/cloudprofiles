@@ -92,6 +92,26 @@ machineTypes:
     cpu: "48"
     memory: 192Gi
     gpu: "0"
+  - name: cax11
+    cpu: "2"
+    memory: 4Gi
+    gpu: "0"
+    architecture: arm64
+  - name: cax21
+    cpu: "4"
+    memory: 8Gi
+    gpu: "0"
+    architecture: arm64
+  - name: cax31
+    cpu: "8"
+    memory: 16Gi
+    gpu: "0"
+    architecture: arm64
+  - name: cax41
+    cpu: "16"
+    memory: 32Gi
+    gpu: "0"
+    architecture: arm64
 regions:
   - name: hel1
     zones:
@@ -115,6 +135,10 @@ regions:
         - ccx31
         - ccx41
         - ccx51
+        - cax11
+        - cax21
+        - cax31
+        - cax41
 providerConfig:
   apiVersion: hcloud.provider.extensions.gardener.cloud/v1alpha1
   kind: CloudProfileConfig
