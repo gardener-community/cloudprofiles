@@ -139,6 +139,40 @@ regions:
         - cax21
         - cax31
         - cax41
+  - name: hil
+    zones:
+      - name: hil-dc1
+        unavailableMachineTypes:
+        - cx22
+        - cx32
+        - cx42
+        - cx52
+        - ccx11
+        - ccx21
+        - ccx31
+        - ccx41
+        - ccx51
+        - cax11
+        - cax21
+        - cax31
+        - cax41
+  - name: sin
+    zones:
+      - name: sin-dc1
+        unavailableMachineTypes:
+        - cx22
+        - cx32
+        - cx42
+        - cx52
+        - ccx11
+        - ccx21
+        - ccx31
+        - ccx41
+        - ccx51
+        - cax11
+        - cax21
+        - cax31
+        - cax41
 providerConfig:
   apiVersion: hcloud.provider.extensions.gardener.cloud/v1alpha1
   kind: CloudProfileConfig
