@@ -16,18 +16,24 @@ global:
       include: true
       versions:
         1.27.16:
-          classification: deprecated
+          classification: supported
         1.28.11:
           classification: deprecated
         1.28.12:
+          classification: deprecated
+        1.28.13:
           classification: supported
         1.29.6:
           classification: deprecated
         1.29.7:
+          classification: deprecated
+        1.29.8:
           classification: supported
         1.30.2:
           classification: deprecated
         1.30.3:
+          classification: deprecated
+        1.30.4:
           classification: supported
     versions: {}
   seedSelector:
