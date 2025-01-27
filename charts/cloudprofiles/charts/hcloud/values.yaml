@@ -12,10 +12,14 @@ kubernetes:
 machineImages:
   - name: ubuntu
     versions:
-    - version: 20.4.20210616
+    - version: 24.4.20240529
       cri:
       - name: containerd
 machineTypes:
+  - name: cpx11
+    cpu: "2"
+    memory: 2Gi
+    gpu: "0"
   - name: cx22
     cpu: "2"
     memory: 4Gi
@@ -145,7 +149,7 @@ providerConfig:
   machineImages:
   - name: ubuntu
     versions:
-    - version: 20.4.20210616
+    - version: 24.4.20240529
       imageName: ubuntu-20.04
   regions:
     - name: hel1
