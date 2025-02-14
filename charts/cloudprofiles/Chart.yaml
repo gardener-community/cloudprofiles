@@ -2,4 +2,4 @@ apiVersion: v2
 description: A Helm chart for Kubernetes
 name: cloudprofiles
 type: application
-version: 0.7.22
+version: 0.7.23
