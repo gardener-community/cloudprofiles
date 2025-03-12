@@ -26,8 +26,12 @@ global:
         1.29.13:
           classification: deprecated
         1.29.14:
+          classification: deprecated
+        1.29.15:
           classification: supported
         1.30.10:
+          classification: deprecated
+        1.30.11:
           classification: supported
         1.30.7:
           classification: deprecated
