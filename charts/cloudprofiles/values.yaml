@@ -34,6 +34,8 @@ global:
         1.30.11:
           classification: deprecated
         1.30.12:
+          classification: deprecated
+        1.30.13:
           classification: supported
         1.30.7:
           classification: deprecated
