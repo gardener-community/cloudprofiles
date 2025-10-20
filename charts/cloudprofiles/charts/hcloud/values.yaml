@@ -16,39 +16,43 @@ machineImages:
       cri:
       - name: containerd
 machineTypes:
-  - name: cpx11
-    cpu: "2"
+  - name: cpx12
+    cpu: "1"
     memory: 2Gi
     gpu: "0"
-  - name: cx22
+  - name: cx23
     cpu: "2"
     memory: 4Gi
     gpu: "0"
-  - name: cpx21
-    cpu: "3"
+  - name: cpx22
+    cpu: "2"
     memory: 4Gi
     gpu: "0"
-  - name: cx32
+  - name: cx33
     cpu: "4"
     memory: 8Gi
     gpu: "0"
-  - name: cpx31
+  - name: cpx32
     cpu: "4"
     memory: 8Gi
     gpu: "0"
-  - name: cx42
+  - name: cx43
     cpu: "8"
     memory: 16Gi
     gpu: "0"
-  - name: cpx41
+  - name: cpx42
     cpu: "8"
     memory: 16Gi
     gpu: "0"
-  - name: cx52
+  - name: cx53
     cpu: "16"
     memory: 32Gi
     gpu: "0"
-  - name: cpx51
+  - name: cpx52
+    cpu: "12"
+    memory: 24Gi
+    gpu: "0"
+  - name: cpx62
     cpu: "16"
     memory: 32Gi
     gpu: "0"
@@ -110,10 +114,10 @@ regions:
     zones:
       - name: ash-dc1
         unavailableMachineTypes:
-        - cx22
-        - cx32
-        - cx42
-        - cx52
+        - cx23
+        - cx33
+        - cx43
+        - cx53
         - cax11
         - cax21
         - cax31
@@ -122,10 +126,10 @@ regions:
     zones:
       - name: hil-dc1
         unavailableMachineTypes:
-        - cx22
-        - cx32
-        - cx42
-        - cx52
+        - cx23
+        - cx33
+        - cx43
+        - cx53
         - cax11
         - cax21
         - cax31
@@ -134,10 +138,10 @@ regions:
     zones:
       - name: sin-dc1
         unavailableMachineTypes:
-        - cx22
-        - cx32
-        - cx42
-        - cx52
+        - cx23
+        - cx33
+        - cx43
+        - cx53
         - cax11
         - cax21
         - cax31
@@ -150,7 +154,7 @@ providerConfig:
   - name: ubuntu
     versions:
     - version: 24.4.20240529
-      imageName: ubuntu-20.04
+      imageName: ubuntu-24.04
   regions:
     - name: hel1
     - name: fsn1
